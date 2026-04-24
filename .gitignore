@@ -1,0 +1,32 @@
+# TourKey Root
+TurYaz/
+
+# Backend
+tourkey-backend/target/
+tourkey-backend/.idea/
+tourkey-backend/*.iml
+tourkey-backend/.classpath
+tourkey-backend/.project
+tourkey-backend/.settings/
+tourkey-backend/nbproject/
+tourkey-backend/build/
+tourkey-backend/dist/
+tourkey-backend/nbactions.xml
+
+# Frontend
+tourkey-frontend/node_modules/
+tourkey-frontend/.next/
+tourkey-frontend/out/
+tourkey-frontend/.vercel
+tourkey-frontend/*.log
+
+# General
+*.log
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+.vscode/
