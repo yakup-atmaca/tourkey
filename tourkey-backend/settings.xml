@@ -4,8 +4,8 @@
 
   <mirrors>
     <mirror>
-      <id>central-https</id>
-      <mirrorOf>central</mirrorOf>
+      <id>tourkey-central</id>
+      <mirrorOf>*</mirrorOf>
       <name>Maven Central</name>
       <url>https://repo.maven.apache.org/maven2</url>
       <blocked>false</blocked>
