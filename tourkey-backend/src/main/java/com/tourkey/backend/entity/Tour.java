@@ -1,10 +1,8 @@
 package com.tourkey.backend.entity;
 
 import jakarta.persistence.*;
-import org.locationtech.jts.geom.Point;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +42,17 @@ public class Tour extends BaseEntity {
     @Column(name = "currency", nullable = false)
     private String currency = "TRY";
 
-    @Column(name = "start_point", columnDefinition = "geometry(Point, 4326)")
-    private Point startPoint;
+    @Column(name = "start_lat", precision = 10, scale = 8)
+    private BigDecimal startLat;
 
-    @Column(name = "end_point", columnDefinition = "geometry(Point, 4326)")
-    private Point endPoint;
+    @Column(name = "start_lng", precision = 11, scale = 8)
+    private BigDecimal startLng;
+
+    @Column(name = "end_lat", precision = 10, scale = 8)
+    private BigDecimal endLat;
+
+    @Column(name = "end_lng", precision = 11, scale = 8)
+    private BigDecimal endLng;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
@@ -90,11 +94,17 @@ public class Tour extends BaseEntity {
     public String getCurrency() { return currency; }
     public void setCurrency(String currency) { this.currency = currency; }
 
-    public Point getStartPoint() { return startPoint; }
-    public void setStartPoint(Point startPoint) { this.startPoint = startPoint; }
+    public BigDecimal getStartLat() { return startLat; }
+    public void setStartLat(BigDecimal startLat) { this.startLat = startLat; }
 
-    public Point getEndPoint() { return endPoint; }
-    public void setEndPoint(Point endPoint) { this.endPoint = endPoint; }
+    public BigDecimal getStartLng() { return startLng; }
+    public void setStartLng(BigDecimal startLng) { this.startLng = startLng; }
+
+    public BigDecimal getEndLat() { return endLat; }
+    public void setEndLat(BigDecimal endLat) { this.endLat = endLat; }
+
+    public BigDecimal getEndLng() { return endLng; }
+    public void setEndLng(BigDecimal endLng) { this.endLng = endLng; }
 
     public Boolean getIsActive() { return isActive; }
     public void setIsActive(Boolean isActive) { this.isActive = isActive; }

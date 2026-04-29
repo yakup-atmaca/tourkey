@@ -1,8 +1,8 @@
 package com.tourkey.backend.entity;
 
 import jakarta.persistence.*;
-import org.locationtech.jts.geom.Point;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 @Entity
@@ -23,8 +23,11 @@ public class RouteStop extends BaseEntity {
     @Column(name = "sequence", nullable = false)
     private Integer sequence;
 
-    @Column(name = "location", columnDefinition = "geometry(Point, 4326)")
-    private Point location;
+    @Column(name = "lat", precision = 10, scale = 8)
+    private BigDecimal lat;
+
+    @Column(name = "lng", precision = 11, scale = 8)
+    private BigDecimal lng;
 
     @Column(name = "arrival_time")
     private LocalTime arrivalTime;
@@ -52,8 +55,11 @@ public class RouteStop extends BaseEntity {
     public Integer getSequence() { return sequence; }
     public void setSequence(Integer sequence) { this.sequence = sequence; }
 
-    public Point getLocation() { return location; }
-    public void setLocation(Point location) { this.location = location; }
+    public BigDecimal getLat() { return lat; }
+    public void setLat(BigDecimal lat) { this.lat = lat; }
+
+    public BigDecimal getLng() { return lng; }
+    public void setLng(BigDecimal lng) { this.lng = lng; }
 
     public LocalTime getArrivalTime() { return arrivalTime; }
     public void setArrivalTime(LocalTime arrivalTime) { this.arrivalTime = arrivalTime; }

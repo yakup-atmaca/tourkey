@@ -14,7 +14,4 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 
     @Query("SELECT t FROM Tour t WHERE t.organizerCompany.id = :companyId AND t.isActive = true")
     List<Tour> findAvailableToursByOrganizer(@Param("companyId") Long companyId);
-
-    @Query(value = "SELECT t.* FROM tours t WHERE t.is_active = true AND ST_DWithin(t.start_point, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326), :distance)", nativeQuery = true)
-    List<Tour> findNearbyTours(@Param("lat") double lat, @Param("lon") double lon, @Param("distance") double distance);
 }

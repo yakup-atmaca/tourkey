@@ -3,12 +3,10 @@ package com.tourkey.backend.service;
 import com.tourkey.backend.dto.*;
 import com.tourkey.backend.entity.*;
 import com.tourkey.backend.repository.*;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -17,7 +15,6 @@ public class TourService {
     private final TourRepository tourRepository;
     private final CompanyRepository companyRepository;
     private final PartnershipRepository partnershipRepository;
-    private final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
 
     public TourService(TourRepository tourRepository, CompanyRepository companyRepository, PartnershipRepository partnershipRepository) {
         this.tourRepository = tourRepository;
@@ -41,21 +38,18 @@ public class TourService {
         tour.setIsActive(true);
         tour.setTenantId(companyId);
 
-        if (dto.startLat() != null && dto.startLng() != null) {
-            tour.setStartPoint(geometryFactory.createPoint(new Coordinate(dto.startLng(), dto.startLat())));
-        }
-        if (dto.endLat() != null && dto.endLng() != null) {
-            tour.setEndPoint(geometryFactory.createPoint(new Coordinate(dto.endLng(), dto.endLat())));
-        }
+        if (dto.startLat() != null) tour.setStartLat(BigDecimal.valueOf(dto.startLat()));
+        if (dto.startLng() != null) tour.setStartLng(BigDecimal.valueOf(dto.startLng()));
+        if (dto.endLat() != null) tour.setEndLat(BigDecimal.valueOf(dto.endLat()));
+        if (dto.endLng() != null) tour.setEndLng(BigDecimal.valueOf(dto.endLng()));
 
         if (dto.routeStops() != null) {
             for (RouteStopDto rsDto : dto.routeStops()) {
                 RouteStop rs = new RouteStop();
                 rs.setName(rsDto.name());
                 rs.setSequence(rsDto.sequence());
-                if (rsDto.lat() != null && rsDto.lng() != null) {
-                    rs.setLocation(geometryFactory.createPoint(new Coordinate(rsDto.lng(), rsDto.lat())));
-                }
+                if (rsDto.lat() != null) rs.setLat(BigDecimal.valueOf(rsDto.lat()));
+                if (rsDto.lng() != null) rs.setLng(BigDecimal.valueOf(rsDto.lng()));
                 rs.setArrivalTime(rsDto.arrivalTime() != null ? java.time.LocalTime.parse(rsDto.arrivalTime()) : null);
                 rs.setDepartureTime(rsDto.departureTime() != null ? java.time.LocalTime.parse(rsDto.departureTime()) : null);
                 rs.setStopType(RouteStop.StopType.valueOf(rsDto.stopType()));
@@ -110,15 +104,15 @@ public class TourService {
                 t.getOrganizerCompany().getId(), t.getOrganizerCompany().getName(),
                 t.getBasePrice(), t.getAdultPrice(), t.getChildPrice(), t.getBabyPrice(), t.getGuestPrice(),
                 t.getCurrency(),
-                t.getStartPoint() != null ? t.getStartPoint().getY() : null,
-                t.getStartPoint() != null ? t.getStartPoint().getX() : null,
-                t.getEndPoint() != null ? t.getEndPoint().getY() : null,
-                t.getEndPoint() != null ? t.getEndPoint().getX() : null,
+                t.getStartLat() != null ? t.getStartLat().doubleValue() : null,
+                t.getStartLng() != null ? t.getStartLng().doubleValue() : null,
+                t.getEndLat() != null ? t.getEndLat().doubleValue() : null,
+                t.getEndLng() != null ? t.getEndLng().doubleValue() : null,
                 t.getIsActive(),
                 t.getRouteStops().stream().map(rs -> new RouteStopDto(
                         rs.getId(), rs.getName(), rs.getSequence(),
-                        rs.getLocation() != null ? rs.getLocation().getY() : null,
-                        rs.getLocation() != null ? rs.getLocation().getX() : null,
+                        rs.getLat() != null ? rs.getLat().doubleValue() : null,
+                        rs.getLng() != null ? rs.getLng().doubleValue() : null,
                         rs.getArrivalTime() != null ? rs.getArrivalTime().toString() : null,
                         rs.getDepartureTime() != null ? rs.getDepartureTime().toString() : null,
                         rs.getStopType().name()
