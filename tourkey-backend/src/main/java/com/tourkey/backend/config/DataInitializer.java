@@ -27,9 +27,14 @@ public class DataInitializer {
             TicketRepository ticketRepository,
             PasswordEncoder passwordEncoder) {
         return args -> {
-            if (userRepository.count() == 0) {
+            boolean dataAdded = false;
+            Company adminCompany = null;
+            Company ayyildiz = null;
+            Company gezentur = null;
+
+            if (companyRepository.count() == 0) {
                 // ======= ADMIN =======
-                Company adminCompany = new Company();
+                adminCompany = new Company();
                 adminCompany.setName("TourKey Platform");
                 adminCompany.setIsAdmin(true);
                 adminCompany.setIsActive(true);
@@ -49,7 +54,7 @@ public class DataInitializer {
                 userRepository.save(admin);
 
                 // ======= FIRMA 1 - AYYILDIZ =======
-                Company ayyildiz = new Company();
+                ayyildiz = new Company();
                 ayyildiz.setName("Ayyildiz Tur");
                 ayyildiz.setTaxOffice("Antalya VD");
                 ayyildiz.setTaxNumber("1234567890");
@@ -73,7 +78,7 @@ public class DataInitializer {
                 userRepository.save(user1);
 
                 // ======= FIRMA 2 - GEZEN TUR =======
-                Company gezentur = new Company();
+                gezentur = new Company();
                 gezentur.setName("Gezen Tur");
                 gezentur.setTaxOffice("Alanya VD");
                 gezentur.setTaxNumber("9876543210");
