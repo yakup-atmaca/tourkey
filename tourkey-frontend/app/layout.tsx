@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,20 +16,44 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "TourKey - SaaS B2B Tur ve Bilet Yonetim Platformu",
-  description: "Cok kiracili, PostGIS destekli SaaS biletleme platformu",
+  description: "Cok kiracili SaaS biletleme platformu",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ locale?: string }>;
+}) {
+  const { locale } = await params;
+
   return (
     <html
-      lang="tr"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang={locale || "tr"}
+      dir={locale === "ar" ? "rtl" : "ltr"}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  if (theme === 'dark') document.documentElement.classList.add('dark');
+                  else document.documentElement.classList.remove('dark');
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-full flex flex-col antialiased bg-background text-foreground`}>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

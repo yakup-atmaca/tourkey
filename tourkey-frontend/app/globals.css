@@ -1,31 +1,132 @@
 @import "tailwindcss";
 
+@variant dark (&:is(.dark *));
+
+:root {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(222 47% 11%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(222 47% 11%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(222 47% 11%);
+  --primary: hsl(226 70% 55%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(220 14% 96%);
+  --secondary-foreground: hsl(222 47% 11%);
+  --muted: hsl(220 14% 96%);
+  --muted-foreground: hsl(220 9% 46%);
+  --accent: hsl(220 14% 96%);
+  --accent-foreground: hsl(222 47% 11%);
+  --destructive: hsl(0 72% 51%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(220 13% 91%);
+  --input: hsl(220 13% 91%);
+  --ring: hsl(226 70% 55%);
+}
+
+.dark {
+  --background: hsl(222 47% 6%);
+  --foreground: hsl(210 20% 96%);
+  --card: hsl(222 47% 8%);
+  --card-foreground: hsl(210 20% 96%);
+  --popover: hsl(222 47% 8%);
+  --popover-foreground: hsl(210 20% 96%);
+  --primary: hsl(226 85% 62%);
+  --primary-foreground: hsl(222 47% 6%);
+  --secondary: hsl(222 30% 14%);
+  --secondary-foreground: hsl(210 20% 96%);
+  --muted: hsl(222 30% 14%);
+  --muted-foreground: hsl(220 9% 60%);
+  --accent: hsl(222 30% 14%);
+  --accent-foreground: hsl(210 20% 96%);
+  --destructive: hsl(0 72% 51%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(222 20% 18%);
+  --input: hsl(222 20% 18%);
+  --ring: hsl(226 85% 62%);
+}
+
 @theme inline {
-  --color-background: hsl(0 0% 100%);
-  --color-foreground: hsl(222.2 84% 4.9%);
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(222.2 84% 4.9%);
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(222.2 84% 4.9%);
-  --color-primary: hsl(222.2 47.4% 11.2%);
-  --color-primary-foreground: hsl(210 40% 98%);
-  --color-secondary: hsl(210 40% 96.1%);
-  --color-secondary-foreground: hsl(222.2 47.4% 11.2%);
-  --color-muted: hsl(210 40% 96.1%);
-  --color-muted-foreground: hsl(215.4 16.3% 46.9%);
-  --color-accent: hsl(210 40% 96.1%);
-  --color-accent-foreground: hsl(222.2 47.4% 11.2%);
-  --color-destructive: hsl(0 84.2% 60.2%);
-  --color-destructive-foreground: hsl(210 40% 98%);
-  --color-border: hsl(214.3 31.8% 91.4%);
-  --color-input: hsl(214.3 31.8% 91.4%);
-  --color-ring: hsl(222.2 84% 4.9%);
-  --radius: 0.5rem;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: 0.625rem;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Modern metallic card effect - solid colors for reliability */
+.metallic-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.dark .metallic-card {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Metallic header gradient */
+.metallic-header {
+  background: linear-gradient(135deg, hsl(226 70% 55%) 0%, hsl(250 70% 50%) 100%);
+}
+
+.dark .metallic-header {
+  background: linear-gradient(135deg, hsl(226 60% 45%) 0%, hsl(250 60% 40%) 100%);
+}
+
+/* Glass morphism variant */
+.glass {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(220 13% 80%);
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(222 20% 30%);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(220 13% 65%);
 }
